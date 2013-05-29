@@ -3,8 +3,8 @@ package net.anotheria.jpaflyway.services.user;
 import net.anotheria.anoprise.metafactory.Extension;
 import net.anotheria.anoprise.metafactory.MetaFactory;
 import net.anotheria.anoprise.metafactory.MetaFactoryException;
-import net.anotheria.jpaflyway.entity.User;
-import net.anotheria.jpaflyway.services.user.persistence.JPAPickerConflictResolver;
+import net.anotheria.jpaflyway.services.user.persistence.jpa.JPAPickerConflictResolver;
+import net.anotheria.jpaflyway.services.user.persistence.jpa.User;
 
 import org.configureme.ConfigurationManager;
 import org.configureme.environments.DynamicEnvironment;
@@ -30,7 +30,7 @@ public class UserServiceImplTest {
 	@After
 	public void after() {
 		try {
-			Thread.sleep(500);
+			Thread.sleep(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

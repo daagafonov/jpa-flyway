@@ -2,36 +2,36 @@ package net.anotheria.jpaflyway.services.user.persistence.jpa;
 
 import java.util.List;
 
-import net.anotheria.db.dao.DAOException;
-import net.anotheria.jpaflyway.entity.User;
-import net.anotheria.jpaflyway.services.user.persistence.AbstractPersistenceServiceImpl;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import net.anotheria.jpaflyway.services.shared.persistence.jpa.AbstractPersistenceServiceImpl;
 import net.anotheria.jpaflyway.services.user.persistence.UserPersistenceService;
 import net.anotheria.jpaflyway.services.user.persistence.UserPersistenceServiceException;
 
-public class JPAUserPersistenceServiceImpl extends AbstractPersistenceServiceImpl implements UserPersistenceService {
-
-	private UserDAO dao;
+public class JPAUserPersistenceServiceImpl extends AbstractPersistenceServiceImpl<Long, User> implements UserPersistenceService {
 
 	public JPAUserPersistenceServiceImpl() {
 		super("jpa-users-example");
-		dao = new UserDAOImpl(getEntityManager());
+		setKlass(User.class);
 	}
 
 	@Override
 	public List<User> getAllUsers() throws UserPersistenceServiceException {
-		try {
-			return dao.getAllUsers();
-		} catch (DAOException e) {
-			throw new UserPersistenceServiceException("dao.getAllUsers() failed", e);
-		}
+		return super.findAll();
 	}
 	
 	@Override
 	public void create(User user) throws UserPersistenceServiceException {
+		EntityManager em = getEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try {
-			dao.create(user);
-		} catch (DAOException e) {
-			throw new UserPersistenceServiceException("dao.getAllUsers() failed", e);
+			et.begin();
+			em.persist(user);
+			et.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			et.rollback();
 		}
 	}
 

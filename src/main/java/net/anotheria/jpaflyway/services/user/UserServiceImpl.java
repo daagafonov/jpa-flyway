@@ -4,9 +4,9 @@ import java.util.List;
 
 import net.anotheria.anoprise.metafactory.MetaFactory;
 import net.anotheria.anoprise.metafactory.MetaFactoryException;
-import net.anotheria.jpaflyway.entity.User;
 import net.anotheria.jpaflyway.services.user.persistence.UserPersistenceService;
 import net.anotheria.jpaflyway.services.user.persistence.UserPersistenceServiceException;
+import net.anotheria.jpaflyway.services.user.persistence.jpa.User;
 
 public class UserServiceImpl implements UserService {
 	

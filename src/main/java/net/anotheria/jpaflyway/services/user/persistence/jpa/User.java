@@ -1,4 +1,4 @@
-package net.anotheria.jpaflyway.entity;
+package net.anotheria.jpaflyway.services.user.persistence.jpa;
 
 import java.io.Serializable;
 

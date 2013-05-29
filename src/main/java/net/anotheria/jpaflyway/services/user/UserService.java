@@ -3,7 +3,7 @@ package net.anotheria.jpaflyway.services.user;
 import java.util.List;
 
 import net.anotheria.anoprise.metafactory.Service;
-import net.anotheria.jpaflyway.entity.User;
+import net.anotheria.jpaflyway.services.user.persistence.jpa.User;
 
 /**
  * 

@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.anotheria.anoprise.metafactory.MetaFactory;
 import net.anotheria.anoprise.metafactory.MetaFactoryException;
-import net.anotheria.jpaflyway.entity.User;
 import net.anotheria.jpaflyway.forms.RegisterBean;
 import net.anotheria.jpaflyway.services.user.UserService;
+import net.anotheria.jpaflyway.services.user.persistence.jpa.User;
 import net.anotheria.maf.action.ActionCommand;
 import net.anotheria.maf.action.ActionMapping;
 import net.anotheria.maf.bean.FormBean;

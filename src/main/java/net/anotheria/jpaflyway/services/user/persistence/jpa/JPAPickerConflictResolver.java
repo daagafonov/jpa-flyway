@@ -1,4 +1,4 @@
-package net.anotheria.jpaflyway.services.user.persistence;
+package net.anotheria.jpaflyway.services.user.persistence.jpa;
 
 import java.util.Collection;
 

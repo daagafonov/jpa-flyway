@@ -1,8 +1,10 @@
-package net.anotheria.jpaflyway.services.user.persistence;
+package net.anotheria.jpaflyway.services.shared.persistence.jpa;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -25,13 +27,15 @@ import com.googlecode.flyway.core.api.MigrationInfoService;
  * 
  * @param <T>
  */
-public abstract class AbstractPersistenceServiceImpl {
+public abstract class AbstractPersistenceServiceImpl<K extends Serializable, T extends Serializable> {
 
 	private Logger log = Logger.getLogger(AbstractPersistenceServiceImpl.class);
 
 	private String configName;
 
 	private EntityManagerFactory emf;
+
+	private Class<T> klass;
 
 	public AbstractPersistenceServiceImpl() {
 		this(null);
@@ -40,6 +44,10 @@ public abstract class AbstractPersistenceServiceImpl {
 	public AbstractPersistenceServiceImpl(String configName) {
 		this.configName = configName;
 		init();
+	}
+
+	public void setKlass(Class<T> klass) {
+		this.klass = klass;
 	}
 
 	private void init() {
@@ -61,7 +69,7 @@ public abstract class AbstractPersistenceServiceImpl {
 
 		Flyway flyway = new Flyway();
 		flyway.setDataSource(newDataSource);
-		flyway.setLocations(getClass().getPackage().getName()+".migrations");
+		flyway.setLocations(getClass().getPackage().getName() + ".migrations");
 		flyway.setTable(getTableNameForMigration());
 		flyway.setInitOnMigrate(true);
 		flyway.migrate();
@@ -106,6 +114,31 @@ public abstract class AbstractPersistenceServiceImpl {
 			name.append(it.next());
 		}
 		return "flyway_" + name.toString();
+	}
+	
+	public T getById(K id) {
+		return getEntityManager().find(this.klass, id);
+	}
+
+	public List<T> findAll() {
+		return getEntityManager().createQuery("from " + this.klass.getName()).getResultList();
+	}
+
+	public void save(T entity) {
+		getEntityManager().persist(entity);
+	}
+
+	public void update(T entity) {
+		getEntityManager().merge(entity);
+	}
+
+	public void delete(T entity) {
+		getEntityManager().remove(entity);
+	}
+
+	public void deleteById(K entityId) {
+		T entity = this.getById(entityId);
+		this.delete(entity);
 	}
 
 }
